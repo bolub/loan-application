@@ -1,0 +1,246 @@
+import Head from 'next/head';
+import { useState, useRef } from 'react';
+import Navbar from '../Components/Navbar';
+import Stage1 from '../Components/Stages/Stage1';
+import Stage2 from '../Components/Stages/Stage2';
+import Stage3 from '../Components/Stages/Stage3';
+import Button from '../Components/UI/Button';
+
+export default function Home() {
+  const openLink = (url) => {
+    if (typeof window !== 'undefined') {
+      window.open(url);
+    }
+  };
+
+  const [stage1, setStage1] = useState(true);
+  const [stage2, setStage2] = useState(false);
+  const [stage3, setStage3] = useState(false);
+
+  const [basicInfo, setBasicInfo] = useState({
+    firstname: '',
+    lastname: '',
+    email: '',
+    phonenumber: '',
+    dateofbirth: '',
+  });
+
+  const [creditInfo, setCreditInfo] = useState({
+    bvn: '',
+    monthlyincome: '',
+    salaryaccountnumber: '',
+    bankname: '',
+    payday: '',
+    officeaddress: '',
+  });
+
+  const [loanInfo, setLoanInfo] = useState({
+    loantype: '',
+    loanamount: '',
+    tenor: '',
+  });
+
+  const [buttonState, setButtonState] = useState('');
+  const [status, setStatus] = useState('idle');
+
+  const basicInfoHandler = (label, value) => {
+    setBasicInfo({
+      ...basicInfo,
+      [label]: value,
+    });
+  };
+
+  const creditInfoHandler = (label, value) => {
+    setCreditInfo({
+      ...creditInfo,
+      [label]: value,
+    });
+  };
+
+  const loanInfoHandler = (label, value) => {
+    setLoanInfo({
+      ...loanInfo,
+      [label]: value,
+    });
+  };
+
+  const moveToStageOne = () => {
+    setStage1(true);
+    setStage2(false);
+    setStage3(false);
+  };
+
+  const moveToStageTwo = () => {
+    setStage1(false);
+    setStage2(true);
+    setStage3(false);
+  };
+
+  const moveToStageThree = () => {
+    setStage1(false);
+    setStage2(false);
+    setStage3(true);
+  };
+
+  const handleNext = () => {
+    if (stage1) {
+      moveToStageTwo();
+    }
+
+    if (stage2) {
+      moveToStageThree();
+    }
+  };
+
+  const handlePrev = () => {
+    if (stage3) {
+      moveToStageTwo();
+    }
+
+    if (stage2) {
+      moveToStageOne();
+    }
+  };
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
+    if (buttonState === 'next') {
+      handleNext();
+    }
+
+    if (buttonState === 'prev') {
+      handlePrev();
+    }
+
+    if (buttonState === 'submit') {
+      setStatus('loading');
+
+      try {
+        await fetch(`https://formsubmit.co/ajax/abiol5202@gmail.com`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify({
+            ...basicInfo,
+            ...creditInfo,
+            ...loanInfo,
+          }),
+        });
+
+        setStatus('success');
+      } catch (error) {
+        setStatus('error');
+
+        return null;
+      }
+    }
+  };
+
+  return (
+    <>
+      <Head>
+        <title>Loan Application</title>
+        <meta
+          name='description'
+          content='Brand Identity camp is an initiative to help young and aspiring
+            graphic designers learn how to make stunning brand identity designs
+            that they see foreign studios make. It’s particularly geared towards
+            African students, but we have a little bit of room for international
+            persons and also Africans in the working class'
+        />
+
+        <meta
+          property='og:title'
+          content='Brand Identity Camp 1.0 - Dashcreate'
+        />
+        <meta property='og:site_name' content='Dashcreate' />
+        <meta property='og:url' content='https://www.dashcreate.design/' />
+        <meta
+          property='og:description'
+          content='Brand Identity camp is an initiative to help young and aspiring
+            graphic designers learn how to make stunning brand Identity designs
+            that they see foreign studios make. It’s particularly geared towards
+            African students, but we have a little bit of room for international
+            persons and also Africans in the working class'
+        />
+        <meta property='og:type' content='website' />
+        <meta
+          property='og:image'
+          content='https://wallpapercave.com/wp/wp4471362.jpg'
+        />
+      </Head>
+
+      <Navbar />
+
+      <main className='px-5 md:px-16 flex flex-col mt-12 mb-16'>
+        <div className='md:w-6/12 m-auto'>
+          {status !== 'success' ? (
+            <form onSubmit={onSubmit}>
+              {stage1 && (
+                <Stage1 setInput={basicInfoHandler} basicInfo={basicInfo} />
+              )}
+              {stage2 && (
+                <Stage2 setInput={creditInfoHandler} creditInfo={creditInfo} />
+              )}
+              {stage3 && (
+                <Stage3 setInput={loanInfoHandler} loanInfo={loanInfo} />
+              )}
+
+              <div className='flex mt-8'>
+                <div>
+                  <Button
+                    title='Previous'
+                    type='submit'
+                    variant='outline'
+                    isDisabled={stage1}
+                    onClick={() => setButtonState('prev')}
+                  />
+                </div>
+
+                <div className='ml-auto'>
+                  <Button
+                    title={stage3 ? 'Submit' : 'Next'}
+                    type='submit'
+                    isLoading={status === 'loading'}
+                    onClick={() => {
+                      if (stage3) {
+                        setButtonState('submit');
+                      } else {
+                        setButtonState('next');
+                      }
+                    }}
+                  />
+                </div>
+              </div>
+            </form>
+          ) : (
+            <div className='text-center mt-20'>
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                class='h-16 w-16 mx-auto mb-3 text-green-800'
+                fill='none'
+                viewBox='0 0 24 24'
+                stroke='currentColor'
+              >
+                <path
+                  stroke-linecap='round'
+                  stroke-linejoin='round'
+                  stroke-width='2'
+                  d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'
+                />
+              </svg>
+
+              <h3 className='text-gray-800 text-2xl font-bold'>
+                Loan Application Successful
+              </h3>
+              <p>Your loan application has been sent successfully</p>
+            </div>
+          )}
+        </div>
+      </main>
+    </>
+  );
+}
