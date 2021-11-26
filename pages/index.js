@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import Navbar from '../Components/Navbar';
 import Stage1 from '../Components/Stages/Stage1';
 import Stage2 from '../Components/Stages/Stage2';
@@ -7,12 +7,6 @@ import Stage3 from '../Components/Stages/Stage3';
 import Button from '../Components/UI/Button';
 
 export default function Home() {
-  const openLink = (url) => {
-    if (typeof window !== 'undefined') {
-      window.open(url);
-    }
-  };
-
   const [stage1, setStage1] = useState(true);
   const [stage2, setStage2] = useState(false);
   const [stage3, setStage3] = useState(false);
@@ -143,34 +137,6 @@ export default function Home() {
     <>
       <Head>
         <title>Loan Application</title>
-        <meta
-          name='description'
-          content='Brand Identity camp is an initiative to help young and aspiring
-            graphic designers learn how to make stunning brand identity designs
-            that they see foreign studios make. It’s particularly geared towards
-            African students, but we have a little bit of room for international
-            persons and also Africans in the working class'
-        />
-
-        <meta
-          property='og:title'
-          content='Brand Identity Camp 1.0 - Dashcreate'
-        />
-        <meta property='og:site_name' content='Dashcreate' />
-        <meta property='og:url' content='https://www.dashcreate.design/' />
-        <meta
-          property='og:description'
-          content='Brand Identity camp is an initiative to help young and aspiring
-            graphic designers learn how to make stunning brand Identity designs
-            that they see foreign studios make. It’s particularly geared towards
-            African students, but we have a little bit of room for international
-            persons and also Africans in the working class'
-        />
-        <meta property='og:type' content='website' />
-        <meta
-          property='og:image'
-          content='https://wallpapercave.com/wp/wp4471362.jpg'
-        />
       </Head>
 
       <Navbar />
