@@ -166,7 +166,7 @@ const Stage3 = ({ setInput, loanInfo, isFoodBasket }) => {
             <option>Select Tenor</option>
             {isFoodBasket ? (
               <>
-                <option value='1 Months'>1 Months</option>
+                <option value='1 Month'>1 Months</option>
                 <option value='2 Months'>2 Months</option>
                 <option value='3 Months'>3 Months</option>
               </>
