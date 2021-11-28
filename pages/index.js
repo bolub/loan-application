@@ -1,213 +1,37 @@
 import Head from 'next/head';
-import { useState } from 'react';
-import Navbar from '../Components/Navbar';
-import Stage1 from '../Components/Stages/Stage1';
-import Stage2 from '../Components/Stages/Stage2';
-import Stage3 from '../Components/Stages/Stage3';
-import Button from '../Components/UI/Button';
+import Link from 'next/link';
+import Select from 'react-select';
 
 export default function Home() {
-  const [stage1, setStage1] = useState(true);
-  const [stage2, setStage2] = useState(false);
-  const [stage3, setStage3] = useState(false);
-
-  const [basicInfo, setBasicInfo] = useState({
-    firstname: '',
-    lastname: '',
-    email: '',
-    phonenumber: '',
-    dateofbirth: '',
-  });
-
-  const [creditInfo, setCreditInfo] = useState({
-    bvn: '',
-    monthlyincome: '',
-    salaryaccountnumber: '',
-    bankname: '',
-    payday: '',
-    officeaddress: '',
-  });
-
-  const [loanInfo, setLoanInfo] = useState({
-    loantype: '',
-    loanamount: '',
-    tenor: '',
-  });
-
-  const [buttonState, setButtonState] = useState('');
-  const [status, setStatus] = useState('idle');
-
-  const basicInfoHandler = (label, value) => {
-    setBasicInfo({
-      ...basicInfo,
-      [label]: value,
-    });
-  };
-
-  const creditInfoHandler = (label, value) => {
-    setCreditInfo({
-      ...creditInfo,
-      [label]: value,
-    });
-  };
-
-  const loanInfoHandler = (label, value) => {
-    setLoanInfo({
-      ...loanInfo,
-      [label]: value,
-    });
-  };
-
-  const moveToStageOne = () => {
-    setStage1(true);
-    setStage2(false);
-    setStage3(false);
-  };
-
-  const moveToStageTwo = () => {
-    setStage1(false);
-    setStage2(true);
-    setStage3(false);
-  };
-
-  const moveToStageThree = () => {
-    setStage1(false);
-    setStage2(false);
-    setStage3(true);
-  };
-
-  const handleNext = () => {
-    if (stage1) {
-      moveToStageTwo();
-    }
-
-    if (stage2) {
-      moveToStageThree();
-    }
-  };
-
-  const handlePrev = () => {
-    if (stage3) {
-      moveToStageTwo();
-    }
-
-    if (stage2) {
-      moveToStageOne();
-    }
-  };
-
-  const onSubmit = async (e) => {
-    e.preventDefault();
-
-    if (buttonState === 'next') {
-      handleNext();
-    }
-
-    if (buttonState === 'prev') {
-      handlePrev();
-    }
-
-    if (buttonState === 'submit') {
-      setStatus('loading');
-
-      try {
-        await fetch(
-          `https://formsubmit.co/ajax/32a2fa9b497a5567081b1499040b9226`,
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              Accept: 'application/json',
-            },
-            body: JSON.stringify({
-              ...basicInfo,
-              ...creditInfo,
-              ...loanInfo,
-            }),
-          }
-        );
-
-        setStatus('success');
-      } catch (error) {
-        setStatus('error');
-
-        return null;
-      }
-    }
-  };
-
   return (
     <>
       <Head>
         <title>Loan Application</title>
       </Head>
 
-      <Navbar />
+      {/* <Navbar /> */}
 
-      <main className='px-5 md:px-16 flex flex-col mt-12 mb-16'>
-        <div className='md:w-6/12 m-auto'>
-          {status !== 'success' ? (
-            <form onSubmit={onSubmit}>
-              {stage1 && (
-                <Stage1 setInput={basicInfoHandler} basicInfo={basicInfo} />
-              )}
-              {stage2 && (
-                <Stage2 setInput={creditInfoHandler} creditInfo={creditInfo} />
-              )}
-              {stage3 && (
-                <Stage3 setInput={loanInfoHandler} loanInfo={loanInfo} />
-              )}
+      <main className='px-5 md:px-16 flex flex-col h-auto m-auto'>
+        <div className='md:w-8/12 m-auto text-center flex justify-center items-center flex-col'>
+          <h1 className='font-bold text-blue-500 text-md uppercase mb-5'>
+            Loan Application
+          </h1>
 
-              <div className='flex mt-8'>
-                <div>
-                  <Button
-                    title='Previous'
-                    type='submit'
-                    variant='outline'
-                    isDisabled={stage1}
-                    onClick={() => setButtonState('prev')}
-                  />
-                </div>
-
-                <div className='ml-auto'>
-                  <Button
-                    title={stage3 ? 'Submit' : 'Next'}
-                    type='submit'
-                    isLoading={status === 'loading'}
-                    onClick={() => {
-                      if (stage3) {
-                        setButtonState('submit');
-                      } else {
-                        setButtonState('next');
-                      }
-                    }}
-                  />
-                </div>
+          <div className='flex flex-col md:flex-row'>
+            <Link href='/loanApplication'>
+              <div className='w-full transition duration-100 md:w-56 mb-5 md:mb-0 md:mr-4 border rounded-md px-10 py-16 cursor-pointer flex-flex-col hover:bg-blue-500 hover:text-white'>
+                <p className='text-2xl mb-2'>💰</p>
+                <p className='text-lg'>Loan Application</p>
               </div>
-            </form>
-          ) : (
-            <div className='text-center mt-20'>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                class='h-16 w-16 mx-auto mb-3 text-green-800'
-                fill='none'
-                viewBox='0 0 24 24'
-                stroke='currentColor'
-              >
-                <path
-                  stroke-linecap='round'
-                  stroke-linejoin='round'
-                  stroke-width='2'
-                  d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'
-                />
-              </svg>
+            </Link>
 
-              <h3 className='text-gray-800 text-2xl font-bold'>
-                Loan Application Successful
-              </h3>
-              <p>Your loan application has been sent successfully</p>
-            </div>
-          )}
+            <Link href='/foodBasket'>
+              <div className='w-full transition duration-100 md:w-56 md:mr-4 border rounded-md px-10 py-16 cursor-pointer flex-flex-col hover:bg-blue-500 hover:text-white'>
+                <p className='text-2xl mb-2'>🧺</p>
+                <p className='text-lg'>Food Basket</p>
+              </div>
+            </Link>
+          </div>
         </div>
       </main>
     </>

@@ -13,8 +13,9 @@ function MyApp({ Component, pageProps }) {
           rel='stylesheet'
         />
       </Head>
-
-      <Component {...pageProps} />
+      <div className='border-8 min-h-screen border-blue-500 flex flex-col'>
+        <Component {...pageProps} />
+      </div>
     </>
   );
 }
