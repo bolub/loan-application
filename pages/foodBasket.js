@@ -30,7 +30,7 @@ export default function FoodBasket() {
 
   const [loanInfo, setLoanInfo] = useState({
     loanamount: '',
-    tenor: '',
+    installments: '',
     fooditems: {},
   });
 
@@ -111,21 +111,18 @@ export default function FoodBasket() {
       setStatus('loading');
 
       try {
-        await fetch(
-          `https://formsubmit.co/ajax/32a2fa9b497a5567081b1499040b9226`,
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              Accept: 'application/json',
-            },
-            body: JSON.stringify({
-              ...basicInfo,
-              ...creditInfo,
-              ...loanInfo,
-            }),
-          }
-        );
+        await fetch(`https://formsubmit.co/ajax/abiol5202@gmail.com`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify({
+            ...basicInfo,
+            ...creditInfo,
+            ...loanInfo,
+          }),
+        });
 
         setStatus('success');
       } catch (error) {
@@ -207,9 +204,9 @@ export default function FoodBasket() {
               </svg>
 
               <h3 className='text-gray-800 text-2xl font-bold'>
-                Loan Application Successful
+                Food Basket application Successful
               </h3>
-              <p>Your loan application has been sent successfully</p>
+              <p>Your Food basket application has been sent successfully</p>
             </div>
           )}
         </div>

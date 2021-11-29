@@ -104,11 +104,10 @@ const Stage3 = ({ setInput, loanInfo, isFoodBasket }) => {
     <>
       <Header
         title='Loan Information'
-        description='Please tell us about the loan type'
+        description='Please provide additional information'
       />
 
       <div className='mt-8'>
-        {/* lOAN tYPE */}
         {!isFoodBasket && (
           <div className='mb-8'>
             <Label title='Loan Type' lFor='loantype' />
@@ -152,34 +151,45 @@ const Stage3 = ({ setInput, loanInfo, isFoodBasket }) => {
         </div>
 
         {/* tenor */}
-        <div className='mb-8'>
-          <Label title='Tenor' lFor='tenor' />
+        {isFoodBasket ? (
+          <div className='mb-8'>
+            <Label title='Installments' lFor='installments' />
 
-          <select
-            className='w-full my-auto bg-white py-3 px-5 border-gray-200 rounded-md mr-2 focus:outline-none  focus:border-blue-500 border-2 placeholder-gray-400'
-            id='tenor'
-            name='tenor'
-            onChange={(e) => setInput('tenor', e.target.value)}
-            value={loanInfo.tenor}
-            required
-          >
-            <option>Select Tenor</option>
-            {isFoodBasket ? (
-              <>
-                <option value='1 Month'>1 Months</option>
-                <option value='2 Months'>2 Months</option>
-                <option value='3 Months'>3 Months</option>
-              </>
-            ) : (
-              <>
-                <option value='3 Months'>3 Months</option>
-                <option value='4 Months'>4 Months</option>
-                <option value='5 Months'>5 Months</option>
-                <option value='6 Months'>6 Months</option>
-              </>
-            )}
-          </select>
-        </div>
+            <select
+              className='w-full my-auto bg-white py-3 px-5 border-gray-200 rounded-md mr-2 focus:outline-none  focus:border-blue-500 border-2 placeholder-gray-400'
+              id='installments'
+              name='installments'
+              onChange={(e) => setInput('installments', e.target.value)}
+              value={loanInfo.installments}
+              required
+            >
+              <option>Select Installments</option>
+              <option value='1 Installment'>1 Installment</option>
+              <option value='2 Installments'>2 Installments</option>
+              <option value='3 Installments'>3 Installments</option>
+            </select>
+          </div>
+        ) : (
+          <div className='mb-8'>
+            <Label title='Tenor' lFor='tenor' />
+
+            <select
+              className='w-full my-auto bg-white py-3 px-5 border-gray-200 rounded-md mr-2 focus:outline-none  focus:border-blue-500 border-2 placeholder-gray-400'
+              id='tenor'
+              name='tenor'
+              onChange={(e) => setInput('tenor', e.target.value)}
+              value={loanInfo.tenor}
+              required
+            >
+              <option>Select Tenor</option>
+
+              <option value='3 Months'>3 Months</option>
+              <option value='4 Months'>4 Months</option>
+              <option value='5 Months'>5 Months</option>
+              <option value='6 Months'>6 Months</option>
+            </select>
+          </div>
+        )}
 
         {/* food items */}
         <div>
