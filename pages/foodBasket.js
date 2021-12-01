@@ -111,21 +111,18 @@ export default function FoodBasket() {
       setStatus('loading');
 
       try {
-        await fetch(
-          `https://formsubmit.co/ajax/32a2fa9b497a5567081b1499040b9226`,
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              Accept: 'application/json',
-            },
-            body: JSON.stringify({
-              ...basicInfo,
-              ...creditInfo,
-              ...loanInfo,
-            }),
-          }
-        );
+        await fetch(`https://formsubmit.co/ajax/bola.o@paylaterhub.com`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify({
+            ...basicInfo,
+            ...creditInfo,
+            ...loanInfo,
+          }),
+        });
 
         setStatus('success');
       } catch (error) {

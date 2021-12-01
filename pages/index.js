@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import Image from 'next/image';
+// import Image from 'next/image';
 import Logo from './../public/logo.png';
 
 export default function Home() {
@@ -14,9 +14,9 @@ export default function Home() {
 
       <main className='px-5 md:px-16 flex flex-col h-auto m-auto'>
         <div className='md:w-8/12 m-auto text-center flex justify-center items-center flex-col'>
-          <div className='w-40 h-40 flex items-center justify-center'>
-            <Image src={Logo} alt='Paylater hub' />
-          </div>
+          {/* <div className=' flex items-center justify-center '> */}
+          <img src='logo.png' className='w-52 mb-10' alt='Paylater hub' />
+          {/* </div> */}
 
           <div className='flex flex-col md:flex-row'>
             <Link href='/foodBasket'>
