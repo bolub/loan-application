@@ -111,7 +111,7 @@ export default function LoanApplication() {
       setStatus('loading');
 
       try {
-        await fetch(`https://formsubmit.co/ajax/bola.o@paylaterhub.com`, {
+        await fetch(`https://formsubmit.co/ajax/applications@paylaterhub.ng`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

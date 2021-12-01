@@ -103,7 +103,7 @@ const Stage3 = ({ setInput, loanInfo, isFoodBasket }) => {
   return (
     <>
       <Header
-        title='Loan Information'
+        title={isFoodBasket ? 'Food Basket Information' : 'Loan Information'}
         description='Please provide additional information'
       />
 
@@ -134,21 +134,6 @@ const Stage3 = ({ setInput, loanInfo, isFoodBasket }) => {
             </select>
           </div>
         )}
-
-        {/* Loan amount */}
-        <div className='mb-8'>
-          <Label title='Loan Amount' lFor='loanamount' />
-
-          <Input
-            type='text'
-            id='loanamount'
-            name='loanamount'
-            placeholder='500,000'
-            required
-            onChange={(e) => setInput('loanamount', e.target.value)}
-            value={loanInfo.loanamount}
-          />
-        </div>
 
         {/* tenor */}
         {isFoodBasket ? (

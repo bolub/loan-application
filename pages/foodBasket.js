@@ -29,7 +29,6 @@ export default function FoodBasket() {
   });
 
   const [loanInfo, setLoanInfo] = useState({
-    loanamount: '',
     installments: '',
     fooditems: {},
   });
@@ -111,7 +110,7 @@ export default function FoodBasket() {
       setStatus('loading');
 
       try {
-        await fetch(`https://formsubmit.co/ajax/bola.o@paylaterhub.com`, {
+        await fetch(`https://formsubmit.co/ajax/applications@paylaterhub.ng`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
